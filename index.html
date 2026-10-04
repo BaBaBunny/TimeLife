@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portrait Timelapse</title>
+    <!-- This links our HTML to our CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="container">
+        <h1>Portrait Aligner</h1>
+        <p>Upload your selfies to generate an aligned timelapse.</p>
+
+        <!-- The Upload Zone -->
+        <div id="drop-zone" class="drop-zone">
+            <p>Drag & drop photos here or click to browse</p>
+            <!-- The actual file input is hidden, but triggered by the drop-zone -->
+            <input type="file" id="file-input" multiple accept="image/png, image/jpeg" style="display: none;">
+        </div>
+
+        <!-- Where our photo previews will appear -->
+        <div id="preview-gallery" class="gallery"></div>
+    </main>
+
+    <!-- This links our HTML to our JavaScript file -->
+    <script src="app.js"></script>
+</body>
+</html>

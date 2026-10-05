@@ -1,0 +1,33 @@
+.container {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.workspace {
+    display: grid;
+    grid-template-columns: minmax(260px, 1.1fr) minmax(300px, 1.2fr) minmax(360px, 1.7fr);
+    gap: 1rem;
+    align-items: start;
+}
+
+.panel {
+    min-width: 0;
+    padding: 1.25rem;
+    border: 1px solid #e4e7eb;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(25, 38, 52, 0.06);
+}
+
+.panel-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.panel-heading h2 {
+    font-size: 1.15rem;
+}

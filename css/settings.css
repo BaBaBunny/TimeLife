@@ -1,0 +1,51 @@
+.settings-panel {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    padding: 1rem;
+    border: 1px solid #e4e7eb;
+    border-radius: 10px;
+    background: #fafbfc;
+}
+
+.settings-panel label {
+    display: grid;
+    gap: 0.25rem;
+    color: #555;
+    font-size: 0.8rem;
+    text-align: left;
+}
+
+.settings-panel .toggle-setting {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.settings-panel .toggle-setting input {
+    width: auto;
+    flex: 0 0 auto;
+}
+
+.setting-summary-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 0.75rem;
+}
+
+.setting-summary {
+    padding-bottom: 0.65rem;
+    color: #5d6872;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.dimension-fields {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+}

@@ -3,28 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portrait Timelapse</title>
-    <!-- This links our HTML to our CSS file -->
+    <title>TimeLife</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <main class="container">
-        <h1>Portrait Aligner</h1>
-        <p>Upload your selfies to generate an aligned timelapse.</p>
+        <header class="page-header">
+            <h1>TimeLife</h1>
+            <p>Align your photos, preview the passage of time, and export the result.</p>
+        </header>
 
-        <!-- The Upload Zone -->
-        <div id="drop-zone" class="drop-zone">
-            <p>Drag & drop photos here or click to browse</p>
-            <!-- The actual file input is hidden, but triggered by the drop-zone -->
-            <input type="file" id="file-input" multiple accept="image/png, image/jpeg" style="display: none;">
+        <div class="workspace">
+            <section class="panel gallery-panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">01 / Photos</p>
+                        <h2>Your gallery</h2>
+                        <span id="gallery-count" class="gallery-count">0 photos</span>
+                    </div>
+                    <div class="gallery-actions">
+                        <button id="clear-button" type="button" disabled>Clear all</button>
+                        <button id="undo-clear-button" type="button" disabled>Undo clear</button>
+                    </div>
+                </div>
+                <div id="preview-gallery" class="gallery"></div>
+                <p id="gallery-empty" class="empty-state">Uploaded photos will appear here.</p>
+            </section>
+
+            <section class="panel editor-panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">02 / Adjust</p>
+                        <h2>Photo editor</h2>
+                    </div>
+                </div>
+                <div id="drop-zone" class="drop-zone">
+                    <p>Drag & drop photos or a folder here, or click to browse</p>
+                    <input type="file" id="file-input" multiple accept="image/png, image/jpeg, image/heic, image/heif, .heic, .heif" style="display: none;">
+                </div>
+                <progress id="upload-progress" max="100" value="0" hidden></progress>
+                <button id="auto-align-all-button" class="primary-editor-action" type="button" disabled>Auto-align all faces</button>
+                <div id="selected-editor" class="selected-editor" hidden>
+                    <div class="editor-preview">
+                        <img id="selected-image" alt="Selected photo">
+                        <div class="alignment-grid" aria-hidden="true"></div>
+                    </div>
+                    <div id="alignment-controls" class="alignment-controls"></div>
+                </div>
+                <p id="editor-empty" class="empty-state">Select a gallery image to adjust it.</p>
+                <div id="auto-align-status" class="auto-align-status" hidden>
+                    <progress id="auto-align-progress" max="100" value="0"></progress>
+                    <button id="cancel-auto-align" type="button">Cancel auto-align</button>
+                </div>
+            </section>
+
+            <section class="panel preview-panel" aria-live="polite">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">03 / Preview</p>
+                        <h2>Timelapse</h2>
+                    </div>
+                </div>
+                <div class="canvas-frame">
+                    <canvas id="timelapse-canvas" width="1280" height="960" hidden></canvas>
+                    <p id="preview-empty" class="empty-state">Generate a preview after adding photos.</p>
+                </div>
+                <p id="generation-status">Add photos to enable the preview.</p>
+                <progress id="export-progress" max="100" value="0" hidden></progress>
+                <div class="settings-panel">
+                    <p class="eyebrow">Settings</p>
+                    <label class="toggle-setting">
+                        <input id="crop-to-fill" type="checkbox">
+                        Crop to fill (no black bars)
+                    </label>
+                    <label class="toggle-setting">
+                        <input id="normalize-lighting" type="checkbox">
+                        Normalize face lighting
+                    </label>
+                    <label class="toggle-setting">
+                        <input id="smooth-lighting" type="checkbox">
+                        Smooth lighting transitions
+                    </label>
+                    <div class="setting-summary-row">
+                        <label>
+                            Seconds per frame
+                            <input id="seconds-per-frame" type="number" min="0.01" max="10" step="0.01" value="0.5">
+                        </label>
+                        <span id="total-duration" class="setting-summary">0 seconds total</span>
+                    </div>
+                    <div class="dimension-fields">
+                        <label>
+                            Aspect preset
+                            <select id="aspect-preset">
+                                <option value="1280x960">iPhone 4:3</option>
+                                <option value="1920x1080">iPhone 16:9</option>
+                                <option value="1080x1080">Instagram square</option>
+                                <option value="1080x1350">Instagram portrait</option>
+                                <option value="1080x566">Instagram landscape</option>
+                                <option value="1920x1080">YouTube 1080p</option>
+                                <option value="1280x720">YouTube 720p</option>
+                                <option value="3840x2160">4K UHD</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </label>
+                        <label>
+                            Width
+                            <input id="video-width" type="number" min="160" max="3840" step="10" value="1280">
+                        </label>
+                        <label>
+                            Height
+                            <input id="video-height" type="number" min="160" max="3840" step="10" value="960">
+                        </label>
+                    </div>
+                </div>
+                <label class="project-name-field">
+                    Timelapse name
+                    <input id="project-name" type="text" maxlength="80" value="Untitled Timelapse" placeholder="Name your timelapse">
+                </label>
+                <div class="preview-actions">
+                    <button id="generate-button" type="button" disabled>Generate preview</button>
+                    <button id="export-button" type="button" disabled>Export video</button>
+                </div>
+            </section>
         </div>
-
-        <!-- Where our photo previews will appear -->
-        <div id="preview-gallery" class="gallery"></div>
+        <p id="notification" role="status" hidden></p>
     </main>
 
-    <!-- This links our HTML to our JavaScript file -->
-    <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>

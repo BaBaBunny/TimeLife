@@ -1,0 +1,92 @@
+.gallery-count {
+    display: block;
+    margin-top: 0.2rem;
+    color: #7d8791;
+    font-size: 0.75rem;
+}
+
+.gallery-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 72px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    gap: 0.65rem;
+    max-width: 100%;
+    height: 480px;
+    max-height: 480px;
+    padding: 0.2rem 0.1rem 0.75rem;
+    scrollbar-width: thin;
+}
+
+.gallery::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+.gallery::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: #c5ccd3;
+}
+
+.gallery-item {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    contain: content;
+    content-visibility: auto;
+    contain-intrinsic-size: 72px 72px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    cursor: grab;
+    outline: none;
+}
+
+.gallery-item.selected,
+.gallery-item:focus-visible {
+    border-color: #007bff;
+}
+
+.gallery-item.dragging {
+    opacity: 0.45;
+}
+
+.gallery-item.drag-target {
+    outline: 3px solid #007bff;
+    outline-offset: 3px;
+}
+
+.gallery-item img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.remove-photo {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+    display: grid;
+    width: 1.35rem;
+    height: 1.35rem;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    background: rgba(20, 25, 30, 0.78);
+    color: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.remove-photo:hover {
+    background: #c62828;
+}

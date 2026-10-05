@@ -1,0 +1,32 @@
+@media (max-width: 900px) {
+    body {
+        padding: 1rem;
+    }
+
+    .workspace {
+        grid-template-columns: minmax(200px, 0.8fr) minmax(280px, 1fr);
+    }
+
+    .preview-panel {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 0;
+    }
+
+    .workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-panel {
+        grid-column: auto;
+        grid-row: 1;
+    }
+
+    .gallery-item {
+        width: 100%;
+    }
+}

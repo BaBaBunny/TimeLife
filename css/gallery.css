@@ -1,7 +1,7 @@
 .gallery-count {
     display: block;
     margin-top: 0.2rem;
-    color: #7d8791;
+    color: var(--muted);
     font-size: 0.75rem;
 }
 
@@ -12,26 +12,15 @@
 }
 
 .gallery {
+    flex: 1 1 auto;
+    min-height: 0;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-auto-rows: 72px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    grid-auto-rows: minmax(54px, 1fr);
+    overflow: hidden;
     gap: 0.65rem;
     max-width: 100%;
-    height: 480px;
-    max-height: 480px;
-    padding: 0.2rem 0.1rem 0.75rem;
-    scrollbar-width: thin;
-}
-
-.gallery::-webkit-scrollbar {
-    width: 0.5rem;
-}
-
-.gallery::-webkit-scrollbar-thumb {
-    border-radius: 999px;
-    background: #c5ccd3;
+    padding: 0.2rem 0.1rem;
 }
 
 .gallery-item {
@@ -40,7 +29,7 @@
     min-width: 0;
     contain: content;
     content-visibility: auto;
-    contain-intrinsic-size: 72px 72px;
+    contain-intrinsic-size: 64px 64px;
     border: 2px solid transparent;
     border-radius: 10px;
     cursor: grab;
@@ -49,7 +38,8 @@
 
 .gallery-item.selected,
 .gallery-item:focus-visible {
-    border-color: #007bff;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 2px rgba(22, 140, 255, 0.3);
 }
 
 .gallery-item.dragging {
@@ -68,6 +58,10 @@
     border-radius: 8px;
     object-fit: cover;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-panel .drop-zone {
+    margin-bottom: 0.45rem;
 }
 
 .remove-photo {

@@ -1,10 +1,18 @@
 @media (max-width: 900px) {
     body {
         padding: 1rem;
+        overflow: auto;
+    }
+
+    .container {
+        height: auto;
+        min-height: 100vh;
+        padding: 1rem;
     }
 
     .workspace {
         grid-template-columns: minmax(200px, 0.8fr) minmax(280px, 1fr);
+        min-height: 720px;
     }
 
     .preview-panel {
@@ -19,6 +27,7 @@
 
     .workspace {
         grid-template-columns: 1fr;
+        min-height: 0;
     }
 
     .preview-panel {

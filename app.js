@@ -33,6 +33,8 @@ const videoWidthInput = document.getElementById('video-width');
 const videoHeightInput = document.getElementById('video-height');
 const projectNameInput = document.getElementById('project-name');
 const notification = document.getElementById('notification');
+const settingsToggle = document.getElementById('settings-toggle');
+const settingsPanel = document.getElementById('settings-panel');
 const canvasContext = timelapseCanvas.getContext('2d');
 const photos = [];
 const previewUrls = [];
@@ -215,6 +217,13 @@ exportButton.addEventListener('click', exportTimelapse);
 clearButton.addEventListener('click', clearAllPhotos);
 undoClearButton.addEventListener('click', undoClear);
 timelapseCanvas.addEventListener('click', togglePreviewPlayback);
+window.addEventListener('resize', fitPreviewCanvas);
+settingsToggle.addEventListener('click', () => {
+	const isOpen = !settingsPanel.hidden;
+	settingsPanel.hidden = isOpen;
+	settingsToggle.setAttribute('aria-expanded', String(!isOpen));
+	settingsToggle.setAttribute('aria-label', isOpen ? 'Open preview settings' : 'Close preview settings');
+});
 secondsPerFrameInput.addEventListener('change', updatePreviewTiming);
 secondsPerFrameInput.addEventListener('change', () => {
 	updateDurationDisplay();
@@ -399,9 +408,19 @@ function removePhoto(photo) {
 }
 
 function selectPhoto(photo) {
+	if (selectedPhoto === photo) {
+		return;
+	}
 	selectedPhoto = photo;
-	renderPreviews();
+	updateSelectedGalleryItem();
 	renderSelectedEditor();
+}
+
+function updateSelectedGalleryItem() {
+	previewGallery.querySelectorAll('.gallery-item').forEach((galleryItem) => {
+		const photo = photos[Number(galleryItem.dataset.index)];
+		galleryItem.classList.toggle('selected', photo === selectedPhoto);
+	});
 }
 
 function renderSelectedEditor() {
@@ -788,6 +807,7 @@ async function generateTimelapse() {
 
 	timelapseCanvas.hidden = false;
 	previewEmpty.hidden = true;
+	fitPreviewCanvas();
 	startPreviewPlayback();
 	generationStatus.textContent = 'Preview is playing. Click the canvas to pause.';
 	generateButton.disabled = false;
@@ -989,6 +1009,20 @@ function applyVideoDimensions() {
 	videoHeightInput.value = height;
 	timelapseCanvas.width = width;
 	timelapseCanvas.height = height;
+	fitPreviewCanvas();
+}
+
+function fitPreviewCanvas() {
+	const frame = timelapseCanvas.parentElement;
+	if (!frame || timelapseCanvas.width === 0 || timelapseCanvas.height === 0) {
+		return;
+	}
+	const scale = Math.min(
+		frame.clientWidth / timelapseCanvas.width,
+		frame.clientHeight / timelapseCanvas.height
+	);
+	timelapseCanvas.style.width = `${Math.max(1, timelapseCanvas.width * scale)}px`;
+	timelapseCanvas.style.height = `${Math.max(1, timelapseCanvas.height * scale)}px`;
 }
 
 function clampDimension(value) {

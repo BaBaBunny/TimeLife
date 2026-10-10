@@ -27,6 +27,11 @@
                         <button id="undo-clear-button" type="button" disabled>Undo clear</button>
                     </div>
                 </div>
+                <div id="drop-zone" class="drop-zone">
+                    <p>Drag & drop photos or a folder here, or click to browse</p>
+                    <input type="file" id="file-input" multiple accept="image/png, image/jpeg, image/heic, image/heif, .heic, .heif" style="display: none;">
+                </div>
+                <progress id="upload-progress" max="100" value="0" hidden></progress>
                 <div id="preview-gallery" class="gallery"></div>
                 <p id="gallery-empty" class="empty-state">Uploaded photos will appear here.</p>
             </section>
@@ -38,11 +43,6 @@
                         <h2>Photo editor</h2>
                     </div>
                 </div>
-                <div id="drop-zone" class="drop-zone">
-                    <p>Drag & drop photos or a folder here, or click to browse</p>
-                    <input type="file" id="file-input" multiple accept="image/png, image/jpeg, image/heic, image/heif, .heic, .heif" style="display: none;">
-                </div>
-                <progress id="upload-progress" max="100" value="0" hidden></progress>
                 <button id="auto-align-all-button" class="primary-editor-action" type="button" disabled>Auto-align all faces</button>
                 <div id="selected-editor" class="selected-editor" hidden>
                     <div class="editor-preview">
@@ -64,6 +64,7 @@
                         <p class="eyebrow">03 / Preview</p>
                         <h2>Timelapse</h2>
                     </div>
+                    <button id="settings-toggle" class="icon-button" type="button" aria-label="Open preview settings" aria-expanded="false" title="Preview settings">&#9881;</button>
                 </div>
                 <div class="canvas-frame">
                     <canvas id="timelapse-canvas" width="1280" height="960" hidden></canvas>
@@ -71,7 +72,7 @@
                 </div>
                 <p id="generation-status">Add photos to enable the preview.</p>
                 <progress id="export-progress" max="100" value="0" hidden></progress>
-                <div class="settings-panel">
+                <div id="settings-panel" class="settings-panel" hidden>
                     <p class="eyebrow">Settings</p>
                     <label class="toggle-setting">
                         <input id="crop-to-fill" type="checkbox">
